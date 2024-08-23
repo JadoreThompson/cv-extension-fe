@@ -1,24 +1,43 @@
 body {
-    height: 20rem;
+    height: 25rem;
+    width: 15rem;
 }
 
-.container {
-    border: 1px solid red;
-    box-sizing: border-box;
-    max-width: 20rem;
-    padding: 0.25rem;
+.auth-container {
+    height: 50%;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-#result {
-    max-width: 100%;
+.form-group {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 0.2rem;
 }
 
-#resultArea {
-    box-sizing: border-box;
-    max-width: 100%;
-}
-
-textarea {
+.form-group input {
     width: 100%;
-    box-sizing: border-box;
+}
+
+.form-group a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    color: black
+}
+
+.form-group a:hover {
+    text-decoration: underline;
+}
+
+#signUpScreen {
+    display: none;
+}
+
+#addCVScreen {
+    display: none;
 }
