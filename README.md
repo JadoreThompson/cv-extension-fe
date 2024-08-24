@@ -1,6 +1,6 @@
 ## **Description**
 
----
+___
 
 This is the front, with a little bit of backend with JavaScript, end for my cover letter RAG Model. This directory is the intermediary between the client and API built for facilitating and producing the necessary data. 
 
