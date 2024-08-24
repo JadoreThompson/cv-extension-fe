@@ -109,11 +109,11 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-//    if(localStorage.getItem("user_id")) {
-//        loginScreen.style.display = "none";
-//        coverLetterScreen.style.display = "block";
-//        footer.style.visibility = "visible";
-//    }
+    if(localStorage.getItem("user_id")) {
+        loginScreen.style.display = "none";
+        coverLetterScreen.style.display = "block";
+        footer.style.visibility = "visible";
+    }
 
 
     // Authentication

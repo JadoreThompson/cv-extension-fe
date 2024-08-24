@@ -28,6 +28,10 @@ i {
     font-size: 2rem;
 }
 
+button {
+    box-sizing: border-box;
+}
+
 .primary-button {
     background-color: #6db2fd;
     color: white;
@@ -47,7 +51,7 @@ i {
     color: black;
     height: 2rem;
     border: 1px solid #6db2fd;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
 }
 
 .secondary-button:hover {
@@ -127,7 +131,7 @@ i {
 }
 
 .form-group button {
-    height: 1.25rem;
+    height: 1.25rem !important;
 }
 
 /* Loading Screen */
@@ -211,6 +215,27 @@ i {
         top: -100px;
         opacity: 0;
     }
+}
+
+/* Google Button */
+.google-sign-in-button {
+    border-radius: 0.25rem;
+    background-color: white;
+    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.google-sign-in-button:hover {
+    background-color: red;
+    color: white;
+}
+
+.google-sign-in-button i {
+    display: flex;
+    align-items: center;
+    margin-right: 0.2rem;
 }
 
 /* Cover Letter Page Styles */
