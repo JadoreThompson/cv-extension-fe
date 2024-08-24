@@ -1,14 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    /* TODO:
-            - Add Loading screen when user generates cover letter.
-            - Add phone number for registering. Let the user know that
-                the email and phone number will be used in the cover letter
-                as points of contact
-            - Possible features:
-                - Bookmark cover letters to a list (users can save their most liked
-                    cover letters)
-    */
-
     const signUpScreen = document.getElementById("signUpScreen");
     const signUpLink = document.getElementById("signUpLink");
     const signUpSubmit = document.getElementById("signUpSubmit");
@@ -196,7 +186,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 const data = await response.json();
                 console.log("Success: ", data.cover_letter);
 
-                // TODO: Handle the response data (e.g., display the generated cover letter)
                 const container = document.querySelector(".card-body ul");
                 const li = document.createElement("li");
                 const div = document.createElement("div");
@@ -222,11 +211,9 @@ document.addEventListener("DOMContentLoaded", function() {
             } catch (error) {
                 console.error("Error:", error);
                 showAlert("Failed to generate application");
-                // TODO: Handle errors (e.g., display error message to user)
             }
         } else {
             showAlert("Job description is empty");
-            // TODO: Inform the user that job description is required and they need to be logged in
         }
     });
 
