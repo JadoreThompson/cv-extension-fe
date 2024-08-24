@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const googleSignUpButton = document.getElementById("googleSignIn");
     const googleLogInButton = document.getElementById("googleLogIn");
 
-    googleSignUpButton.addEventListener("click", function() {
-        chrome.identity.getAuthToken({ interactive: true }, function(token) {
+    googleSignUpButton.addEventListener("click", async function() {
+        chrome.identity.getAuthToken({ interactive: true }, async function(token) {
           if (chrome.runtime.lastError) {
             console.error(chrome.runtime.lastError);
             showAlert("Failed to authenticate with Google");
@@ -29,22 +29,19 @@ document.addEventListener("DOMContentLoaded", function() {
           }
 
           // Use the token to get user information
-          fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + token)
-            .then(response => response.json())
-            .then(data => {
-              console.log('User Info:', data);
-              // Here you can handle the user data, e.g., send it to your backend
-              handleGoogleSignUp(data);
-            })
-            .catch(error => {
-              console.error('Error fetching user info:', error);
-              showAlert("Failed to get user information");
-            });
+          try {
+            const response = await fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + token);
+            const data = await response.json();
+            await handleGoogleSignUp(data);
+
+          } catch (error) {
+            showAlert(error);
+          }
         });
     });
 
-    googleLogInButton.addEventListener("click", function() {
-        chrome.identity.getAuthToken({ interactive: true }, function(token) {
+    googleLogInButton.addEventListener("click", async function() {
+        chrome.identity.getAuthToken({ interactive: true }, async function(token) {
           if (chrome.runtime.lastError) {
             console.error(chrome.runtime.lastError);
             showAlert("Failed to authenticate with Google");
@@ -52,69 +49,71 @@ document.addEventListener("DOMContentLoaded", function() {
           }
 
           // Use the token to get user information
-          fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + token)
-            .then(response => response.json())
-            .then(data => {
-              console.log('User Info:', data);
-              // Here you can handle the user data, e.g., send it to your backend
-              handleGoogleLogIn(data);
-            })
-            .catch(error => {
-              console.error('Error fetching user info:', error);
-              showAlert("Failed to get user information");
-            });
+          try {
+            const response = await fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + token);
+            const data = await response.json();
+            await handleGoogleLogIn(data);
+
+          } catch (error) {
+            showAlert(error);
+          }
         });
     });
 
-    function handleGoogleSignUp(userData) {
-        // Send user data to your backend
-        fetch("http://localhost:8000/google-signup", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({email: userData.email, name: userData.name})
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log("Google Sign Up successful:", data);
-          localStorage.setItem("user_id", data.user_id);
-          showAlert("Successfully signed up with Google");
-          signUpScreen.style.display = "none";
-          coverLetterScreen.style.display = "block";
-          footer.style.visibility = "visible";
-        })
-        .catch(error => {
-          console.error("Error during Google sign up:", error);
-          showAlert("Failed to sign up with Google");
-        });
+    async function handleGoogleSignUp(userData) {
+        try {
+            const response = await fetch("http://localhost:8000/google-signup", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({email: userData.email, name: userData.name})
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.detail);
+            }
+
+            showAlert("Successfully Sign Up");
+
+            signUpScreen.style.display = "none";
+            addCVScreen.style.display = "block";
+            footer.style.visibility = "visible";
+
+        } catch (error) {
+            showAlert(error);
+        }
     }
 
-    function handleGoogleLogIn(userData) {
-        // Send user data to your backend
-        fetch("http://localhost:8000/google-login", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({email: userData.email, name: userData.name})
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log("Google Sign Up successful:", data);
-          localStorage.setItem("user_id", data.user_id);
-          showAlert("Successfully signed up with Google");
-          loginScreen.style.display = "none";
-          coverLetterScreen.style.display = "block";
-          footer.style.visibility = "visible";
-        })
-        .catch(error => {
-          console.error("Error during Google sign up:", error);
-          showAlert("Failed to sign up with Google");
-        });
+    async function handleGoogleLogIn(userData) {
+        try {
+            const response = await fetch("http://localhost:8000/google-login", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({email: userData.email, name: userData.name})
+            });
+
+            if (!response.ok) {
+                throw new Error("Login Endpoint Failed");
+            }
+
+            const data = await response.json();
+            showAlert("Successfully logged In");
+
+            loginScreen.style.display = "none";
+            addCVScreen.style.display = "block";
+            footer.style.visibility = "visible";
+
+        } catch (error) {
+            showAlert(error);
+        }
     }
 
-    if(localStorage.getItem("user_id")) {
-        loginScreen.style.display = "none";
-        coverLetterScreen.style.display = "block";
-        footer.style.visibility = "visible";
-    }
+//    if(localStorage.getItem("user_id")) {
+//        loginScreen.style.display = "none";
+//        coverLetterScreen.style.display = "block";
+//        footer.style.visibility = "visible";
+//    }
 
 
     // Authentication
