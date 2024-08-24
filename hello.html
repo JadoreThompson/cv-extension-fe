@@ -2,103 +2,130 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-  <title>Job Description Analyzer</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <title>Job Description Analyzer</title>
 </head>
 <body>
-  <!--Log In Screen-->
+  <!-- Loading Screen -->
+  <div id="loadingScreen" class="loading-screen">
+    <div class="loader"></div>
+  </div>
+
+  <!--Custom Alert-->
+  <div id="customAlert" class="custom-alert">
+    <span id="alertMessage">This is a custom alert!</span>
+  </div>
+
+
+  <!-- Login -->
   <div id="loginScreen">
-    <h1>Log In</h1>
-    <div class="auth-container">
-      <div class="form-group">
-        <input type="email" placeholder="Email">
+    <div class="card auth-card" style="top: 30%;">
+      <div class="card-title">
+        <h1>Log In</h1>
       </div>
-      <div class="form-group">
-        <input type="password" placeholder="Password">
-      </div>
-      <div class="form-group">
-        <input id="loginSubmit" type="submit" value="Submit">
-      </div>
-      <div class="form-group">
-        <a id="signUpLink" href="#">Sign Up</a>
+      <div class="card-body">
+        <div class="form-group">
+          <input type="email" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+          <button id="loginSubmit" class="primary-button">Submit</button>
+        </div>
+        <div class="form-group">
+          <a id="signUpLink" href="#">Sign Up</a>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Sign Up screen -->
   <div id="signUpScreen">
-    <h1>Sign Up</h1>
-    <div class="auth-container">
-      <div class="form-group">
-        <input type="text" placeholder="Name">
+    <div class="card auth-card" style="top: 30%;">
+      <div class="card-title">
+        <h1>Sign Up</h1>
       </div>
-      <div class="form-group">
-        <input type="email" placeholder="Email">
-      </div>
-      <div class="form-group">
-        <input type="password" placeholder="Password">
-      </div>
-      <div class="form-group">
-        <input id="signUpSubmit" type="submit" value="Submit">
-      </div>
-      <div class="form-group">
-        <a id="loginLink" href="#">Log In</a>
+      <div class="card-body">
+        <div class="form-group">
+          <input type="text" placeholder="Name">
+        </div>
+        <div class="form-group">
+          <input type="email" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+          <button id="signUpSubmit" class="primary-button" type="submit">Submit</button>
+        </div>
+        <div class="form-group">
+          <span>google auth</span>
+        </div>
+        <div class="form-group">
+          <a id="loginLink" href="#">Log In</a>
+        </div>
       </div>
     </div>
   </div>
 
   <!--Add CV-->
   <div id="addCVScreen">
-    <h1>Add CV</h1>
-    <div class="auth-container">
-      <div class="form-group">
-        <input type="file"><p>Add File</p>
+    <div class="card cv-upload-card">
+      <div class="card-title">
+        <h1>Add CV</h1>
+        <input type="file" class="cv-submit">
       </div>
-      <div class="form-group">
-        <input type="submit" value="Submit">
+      <div class="card-body cv-upload-body">
+        <div class="inner-container">
+          <i id="cvSubmitter" class="fa-solid fa-arrow-up-from-bracket"></i>
+          <h4></h4>
+        </div>
+        <button class="secondary-button" type="submit" id="cvSubmit">Submit</button>
       </div>
     </div>
   </div>
 
-  <!-- Cover Letter Screen -->
+  <!--Cover Letter Screen-->
   <div id="coverLetterScreen">
-    <h1>Get Cover letter</h1>
-    <div class="cover-container">
-      <ul>
-        <li>
-          <div class="cover-letter">
-            <p>Cover letter</p>
-          </div>
-        </li>
-      </ul>
-      <div class="job-description">
-        <textarea id="jobDescBox"></textarea>
-        <input type="submit" value="Submit">
+    <div class="card">
+      <div class="card-title">
+        <h1>Generate Cover Letter</h1>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li>
+            <div class="cover-letter-container">
+              <span class="copy-button">
+                <span>Copy</span>
+              </span>
+              <p>Dear Hiring manager,<br>Blah blah.</p>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
+    <div class="job-description">
+      <input id="jobDescBox" type="text" placeholder="Job Description">
+      <i id="jobDescSubmit" class="fa-solid fa-circle-arrow-up"></i>
+    </div>
   </div>
-  
+
+  <!-- Icon hub -->
   <div id="footer">
-    <div class="container">
-      <div class="footer-action-bar">
-        <div class="action">
-          <p>Icon</p>
-        </div>
-        <div class="action">
-          <p>Icon</p>
-        </div>
-        <div class="action">
-          <p>Icon</p>
-        </div>
-      </div>
+    <div class="icon-container">
+      <i id="addCVIcon" class="fa-solid fa-upload"></i>
+    </div>
+    <div class="icon-container">
+      <i id="getCoverLetterIcon" class="fa-solid fa-envelope-open-text"></i>
     </div>
   </div>
-  
+
   <script src="hello.js"></script>
 </body>
 </html>
