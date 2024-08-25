@@ -26,10 +26,12 @@ a:hover {
 
 i {
     font-size: 2rem;
+    cursor: pointer;
 }
 
 button {
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .primary-button {
@@ -335,6 +337,10 @@ button {
 .inner-container i {
     font-size: 5rem !important;
     color: #6db2fd;
+}
+
+.inner-container:hover {
+    filter: brightness(70%);
 }
 
 /* Footer Icon Styles */
