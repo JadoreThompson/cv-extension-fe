@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Hello Extensions",
-  "description": "Base Level Extension",
+  "name": "CoverCraft",
+  "description": "Applying to jobs can be tedious and daunting having to manually do research on the company and curate your own cover letter. Why not use a tool that produces it for you so. Speeding up the process and allowing you to apply to more jobs than you ever have. All in all increasing your chance of landing a role.",
   "version": "1.0",
   "permissions": [
     "identity",
@@ -16,6 +16,6 @@
   },
   "action": {
     "default_popup": "hello.html",
-    "default_icon": "logo.png"
+    "default_icon": "Orange Black Minimalist Clean Mail Logo Design .png"
   }
 }
