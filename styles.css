@@ -60,6 +60,10 @@ button {
     border: none;
 }
 
+.btn:active {
+    filter: brightness(75%);
+}
+
 #loadingScreen,
 #loginScreen,
 #signUpScreen,

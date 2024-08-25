@@ -184,7 +184,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Saving CV
     if (localStorage.getItem("cv")) {
         const cv = localStorage.getItem("cv");
-        console.log("CV: ", cv);
         const fileDisplayName = document.querySelector(".inner-container h4");
         fileDisplayName.textContent = cv;
     }
@@ -206,6 +205,7 @@ document.addEventListener("DOMContentLoaded", function() {
     cvSubmit.addEventListener("click", async function(){
         addCVScreen.style.display = "none";
         loadingScreen.style.display = "flex";
+        footer.style.visibility = "hidden";
 
         const fileInput = document.querySelector(".cv-submit");
         const cv = fileInput.files[0];
@@ -234,6 +234,7 @@ document.addEventListener("DOMContentLoaded", function() {
         } finally {
             loadScreen.style.display = "none";
             addCVScreen.style.display = "block";
+            footer.style.visibility = "visible";
         }
     });
 
@@ -247,14 +248,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     const jobDescSubmit = document.getElementById("jobDescSubmit");
-    let originalColor = jobDescSubmit.style.color;
-    jobDescSubmit.addEventListener("mousedown", function() {
-        jobDescSubmit.style.color = "blue";
-    });
-
-    jobDescSubmit.addEventListener("mouseup", function() {
-        jobDescSubmit.style.color = originalColor;
-    });
 
     jobDescSubmit.addEventListener("click", async function() {
         event.preventDefault(); // Prevent form submission
@@ -264,19 +257,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (jobDesc && user_id) {
             try {
+                footer.style.visibility = "hidden";
+                coverLetterScreen.style.display = "none";
+                loadingScreen.style.display = "flex";
+
                 const response = await fetch("http://localhost:8000/cover-letter", {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({job_description: jobDesc, user_id: parseInt(user_id)})
                 });
 
-                if (!response.ok) {
-                    await showAlert("failed");
-                    console.log("Monkey");
-                }
-
                 const data = await response.json();
-                console.log("Success: ", data.cover_letter);
+
+                if (!response.ok) {
+                    footer.style.visibility = "visible";
+                    coverLetterScreen.style.display = "block";
+                    throw new Error(data.detail);
+                }
 
                 const container = document.querySelector(".card-body ul");
                 const li = document.createElement("li");
@@ -301,8 +298,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 container.appendChild(li);
 
             } catch (error) {
-                console.error("Error:", error);
-                showAlert("Failed to generate application");
+                showAlert(error);
+            } finally {
+                loadingScreen.style.display = "none";
+                footer.style.visibility = "visible";
+                coverLetterScreen.style.display = "block";
             }
         } else {
             showAlert("Job description is empty");
@@ -310,13 +310,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     const copyButton = document.querySelector(".copy-button");
-    originalColor = copyButton.style.backgroundColor;
-    copyButton.addEventListener("mousedown", function() {
-        copyButton.style.backgroundColor = "#fdfbf7";
-    });
-    copyButton.addEventListener("mouseup", function() {
-        copyButton.style.backgroundColor = originalColor;
-    });
 
     copyButton.addEventListener("click", function() {
         const div = this.closest(".cover-letter-container");
@@ -342,7 +335,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Footer
     const icons = document.querySelectorAll('#footer .icon-container i');
-    console.log("icons: ", icons);
 
     function handleMouseDown(event) {
         event.target.style.color = '#6db2fd';
